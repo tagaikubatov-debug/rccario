@@ -1,6 +1,6 @@
 **🚓 Arduino Robotic Car with Police Lights and Sound**
 ---
-##📌 Project Overview
+###📌 Project Overview
 
 This project is a fully-functional robotic vehicle controlled by Arduino Uno.
 It includes:
@@ -66,7 +66,7 @@ Red LED group	D8
 Blue LED group	D9
 Passive buzzer	D10
 
-**💡 Features**
+#**💡 Features**
 ___
 
 Forward / backward motion
