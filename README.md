@@ -42,7 +42,7 @@ The goal of the project is to design, assemble and document a small robotic syst
 
 ---
 <img width="1860" height="1231" alt="image" src="https://github.com/user-attachments/assets/0b557893-1cff-4fd4-87ca-846db449e390" />
----
+
 ## 🧷 Pinout & Wiring
 
 ### 🔌 Arduino Pin Assignments (match the code)
