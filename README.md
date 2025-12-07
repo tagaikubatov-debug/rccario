@@ -172,8 +172,8 @@ Core logic of the project:
 - Add **battery monitoring** using an analog input
 - Add **ultrasonic sensor** for obstacle avoidance
 - Add separate command to enable/disable police lights/siren
-- Use a custom mobile app UI instead of text commands
-
+- Add a servo motor for steering, allowing the front wheels to turn like a real car instead of using tank-style turning
+- Add front headlights (white LEDs) and rear lights (red LEDs) for a more realistic appearance and better visibility in the dark
 ---
 
 ## 📄 License
