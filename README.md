@@ -40,7 +40,8 @@ Breadboard + jumper wires
 #**🔌 Wiring Diagram**
 ___
 
-<img width="1332" height="1183" alt="image" src="https://github.com/user-attachments/assets/b70894ed-8650-47b2-a3b5-9cfb29d85d11" />
+<img width="1860" height="1231" alt="image" src="https://github.com/user-attachments/assets/e6677d36-bb94-431a-894d-7529f24f274d" />
+
 
 Key connections:
 
