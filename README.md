@@ -177,6 +177,8 @@ Core logic of the project:
 ---
 
 ## 📹 Link to Our Videos
+https://drive.google.com/drive/folders/1W90FwDKnByoNvEtkqwefHqNHmvdGzgBO?usp=drive_link
+
 ---
 ## 📄 License
 
