@@ -14,6 +14,22 @@ It combines:
 The goal of the project is to design, assemble and document a small robotic system that includes **electrical**, **mechanical**, and **software** components.
 
 ---
+## 👥 Team Members
+
+Our project was developed by Team Tony Stark, a motivated and collaborative group of students who worked together to design, build, and program a fully functional robotic system. Each member contributed unique strengths and skills that helped the project succeed.
+
+• Osmonbaev Aibek
+
+Aibek focused on the hardware integration of the robotic system. He worked with wiring, motor drivers, and electrical connections, ensuring that all components were safely and correctly assembled. His attention to detail helped prevent major hardware issues during development.
+
+• Zhaparov Nursultan
+
+Nursultan contributed to the software side of the project, helping write and structure the Arduino code. He worked on command handling, motor control logic, and debugging. His problem-solving skills were especially important during testing.
+
+• Kubatov Tagaibek
+
+Tagaibek assisted with mechanical assembly, soldering and component placement. He helped ensure the car’s physical structure was stable and optimized for movement. His hands-on approach made the assembly process smoother and more efficient.
+
 
 ## 🧠 Main Features
 
