@@ -1,0 +1,89 @@
+#include <SoftwareSerial.h>
+
+// ----- Bluetooth (или другое устройство по SoftwareSerial) -----
+SoftwareSerial mySerial(2, 3); // RX | TX
+
+int command;
+
+// ----- Пины моторов -----
+const int M1_IN1 = 13;
+const int M1_IN2 = 12;
+const int M2_IN1 = 11;
+const int M2_IN2 = 10;
+
+// ----- Пины мигалки и буззера -----
+const int BUZZER   = 5;
+const int RED_LED  = 6;
+const int BLUE_LED = 7;
+
+void setup() {
+  Serial.begin(9600);
+  mySerial.begin(9600);
+
+  // Моторы
+  pinMode(M1_IN1, OUTPUT);
+  pinMode(M1_IN2, OUTPUT);
+  pinMode(M2_IN1, OUTPUT);
+  pinMode(M2_IN2, OUTPUT);
+
+  // Мигалка и буззер
+  pinMode(BUZZER, OUTPUT);
+  pinMode(RED_LED, OUTPUT);
+  pinMode(BLUE_LED, OUTPUT);
+}
+
+// ОДИН цикл мигания + смена тона сирены
+void policeEffect() {
+  // Фаза 1: красный ON, синий OFF, низкий тон
+  digitalWrite(RED_LED, HIGH);
+  digitalWrite(BLUE_LED, LOW);
+  tone(BUZZER, 600);
+  delay(150);
+
+  // Фаза 2: красный OFF, синий ON, высокий тон
+  digitalWrite(RED_LED, LOW);
+  digitalWrite(BLUE_LED, HIGH);
+  tone(BUZZER, 900);
+  delay(150);
+}
+
+void loop() {
+  // --- Приём команд по SoftwareSerial ---
+  if (mySerial.available()) {
+    command = mySerial.read();
+
+    if (command == 'F') {          // Вперёд
+      digitalWrite(M1_IN1, HIGH);
+      digitalWrite(M1_IN2, LOW);
+      digitalWrite(M2_IN1, HIGH);
+      digitalWrite(M2_IN2, LOW);
+    }
+    else if (command == 'B') {     // Назад
+      digitalWrite(M1_IN1, LOW);
+      digitalWrite(M1_IN2, HIGH);
+      digitalWrite(M2_IN1, LOW);
+      digitalWrite(M2_IN2, HIGH);
+    }
+    else if (command == 'L') {     // Влево
+      digitalWrite(M1_IN1, LOW);
+      digitalWrite(M1_IN2, LOW);
+      digitalWrite(M2_IN1, HIGH);
+      digitalWrite(M2_IN2, LOW);
+    }
+    else if (command == 'R') {     // Вправо
+      digitalWrite(M1_IN1, HIGH);
+      digitalWrite(M1_IN2, LOW);
+      digitalWrite(M2_IN1, LOW);
+      digitalWrite(M2_IN2, LOW);
+    }
+    else if (command == 'S') {     // Стоп
+      digitalWrite(M1_IN1, LOW);
+      digitalWrite(M1_IN2, LOW);
+      digitalWrite(M2_IN1, LOW);
+      digitalWrite(M2_IN2, LOW);
+    }
+  }
+
+  // --- Эффект мигалки и сирены (работает постоянно) ---
+  policeEffect();
+}
