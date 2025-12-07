@@ -1,89 +1,135 @@
 #include <SoftwareSerial.h>
 
-// ----- Bluetooth (или другое устройство по SoftwareSerial) -----
+// ----- Bluetooth (SoftwareSerial) -----
+// mySerial RX is on pin 2  -> connect to TX of Bluetooth module
+// mySerial TX is on pin 3  -> connect (via voltage divider) to RX of Bluetooth module
 SoftwareSerial mySerial(2, 3); // RX | TX
 
+// Variable to store incoming command character
 int command;
 
-// ----- Пины моторов -----
+// ----- Motor pins -----
+// These four pins control two sides of the car (left and right).
+// M1 = left side, M2 = right side (you can wire as you like, just be consistent).
 const int M1_IN1 = 13;
 const int M1_IN2 = 12;
 const int M2_IN1 = 11;
 const int M2_IN2 = 10;
 
-// ----- Пины мигалки и буззера -----
+// ----- Police lights & buzzer pins -----
 const int BUZZER   = 5;
 const int RED_LED  = 6;
 const int BLUE_LED = 7;
 
 void setup() {
+  // Serial monitor (USB) for debugging
   Serial.begin(9600);
+
+  // Bluetooth serial
   mySerial.begin(9600);
 
-  // Моторы
+  // Motor pins as outputs
   pinMode(M1_IN1, OUTPUT);
   pinMode(M1_IN2, OUTPUT);
   pinMode(M2_IN1, OUTPUT);
   pinMode(M2_IN2, OUTPUT);
 
-  // Мигалка и буззер
+  // Police lights and buzzer as outputs
   pinMode(BUZZER, OUTPUT);
   pinMode(RED_LED, OUTPUT);
   pinMode(BLUE_LED, OUTPUT);
+
+  // Optional: start with everything off
+  digitalWrite(M1_IN1, LOW);
+  digitalWrite(M1_IN2, LOW);
+  digitalWrite(M2_IN1, LOW);
+  digitalWrite(M2_IN2, LOW);
+  digitalWrite(RED_LED, LOW);
+  digitalWrite(BLUE_LED, LOW);
+  noTone(BUZZER);
+
+  Serial.println("Police Car Robot Ready!");
 }
 
-// ОДИН цикл мигания + смена тона сирены
+// Helper functions to control the motors
+void moveForward() {
+  digitalWrite(M1_IN1, HIGH);
+  digitalWrite(M1_IN2, LOW);
+  digitalWrite(M2_IN1, HIGH);
+  digitalWrite(M2_IN2, LOW);
+}
+
+void moveBackward() {
+  digitalWrite(M1_IN1, LOW);
+  digitalWrite(M1_IN2, HIGH);
+  digitalWrite(M2_IN1, LOW);
+  digitalWrite(M2_IN2, HIGH);
+}
+
+void turnLeft() {
+  // Left side stopped, right side forward
+  digitalWrite(M1_IN1, LOW);
+  digitalWrite(M1_IN2, LOW);
+  digitalWrite(M2_IN1, HIGH);
+  digitalWrite(M2_IN2, LOW);
+}
+
+void turnRight() {
+  // Right side stopped, left side forward
+  digitalWrite(M1_IN1, HIGH);
+  digitalWrite(M1_IN2, LOW);
+  digitalWrite(M2_IN1, LOW);
+  digitalWrite(M2_IN2, LOW);
+}
+
+void stopMotors() {
+  digitalWrite(M1_IN1, LOW);
+  digitalWrite(M1_IN2, LOW);
+  digitalWrite(M2_IN1, LOW);
+  digitalWrite(M2_IN2, LOW);
+}
+
+// One cycle of police flashing + siren tone change
 void policeEffect() {
-  // Фаза 1: красный ON, синий OFF, низкий тон
+  // Phase 1: red ON, blue OFF, low siren tone
   digitalWrite(RED_LED, HIGH);
   digitalWrite(BLUE_LED, LOW);
-  tone(BUZZER, 600);
+  tone(BUZZER, 600);   // lower tone
   delay(150);
 
-  // Фаза 2: красный OFF, синий ON, высокий тон
+  // Phase 2: red OFF, blue ON, higher siren tone
   digitalWrite(RED_LED, LOW);
   digitalWrite(BLUE_LED, HIGH);
-  tone(BUZZER, 900);
+  tone(BUZZER, 900);   // higher tone
   delay(150);
 }
 
 void loop() {
-  // --- Приём команд по SoftwareSerial ---
+  // --- Read commands from Bluetooth (SoftwareSerial) ---
   if (mySerial.available()) {
-    command = mySerial.read();
+    command = mySerial.read();   // read one character
+    Serial.print("Received command: ");
+    Serial.println((char)command);
 
-    if (command == 'F') {          // Вперёд
-      digitalWrite(M1_IN1, HIGH);
-      digitalWrite(M1_IN2, LOW);
-      digitalWrite(M2_IN1, HIGH);
-      digitalWrite(M2_IN2, LOW);
+    // Decide what to do based on the command received
+    if (command == 'F') {          // Move forward
+      moveForward();
     }
-    else if (command == 'B') {     // Назад
-      digitalWrite(M1_IN1, LOW);
-      digitalWrite(M1_IN2, HIGH);
-      digitalWrite(M2_IN1, LOW);
-      digitalWrite(M2_IN2, HIGH);
+    else if (command == 'B') {     // Move backward
+      moveBackward();
     }
-    else if (command == 'L') {     // Влево
-      digitalWrite(M1_IN1, LOW);
-      digitalWrite(M1_IN2, LOW);
-      digitalWrite(M2_IN1, HIGH);
-      digitalWrite(M2_IN2, LOW);
+    else if (command == 'L') {     // Turn left
+      turnLeft();
     }
-    else if (command == 'R') {     // Вправо
-      digitalWrite(M1_IN1, HIGH);
-      digitalWrite(M1_IN2, LOW);
-      digitalWrite(M2_IN1, LOW);
-      digitalWrite(M2_IN2, LOW);
+    else if (command == 'R') {     // Turn right
+      turnRight();
     }
-    else if (command == 'S') {     // Стоп
-      digitalWrite(M1_IN1, LOW);
-      digitalWrite(M1_IN2, LOW);
-      digitalWrite(M2_IN1, LOW);
-      digitalWrite(M2_IN2, LOW);
+    else if (command == 'S') {     // Stop
+      stopMotors();
     }
+    // You can add more commands here later (e.g. 'P' to toggle siren)
   }
 
-  // --- Эффект мигалки и сирены (работает постоянно) ---
+  // --- Police lights & siren effect (runs continuously) ---
   policeEffect();
 }
