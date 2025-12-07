@@ -26,7 +26,6 @@ The goal of the project is to design, assemble and document a small robotic syst
 - 🧩 Modular and easily expandable code  
 
 ---
-
 ## 🛠️ Hardware Used
 
 - **Arduino Uno**
@@ -39,6 +38,16 @@ The goal of the project is to design, assemble and document a small robotic syst
 - **Li-Ion / AA battery pack(s)** for motors and logic
 - Breadboard + jumper wires
 - Chassis + wheels
+
+---
+
+## 3D Model of a Chassis + wheels
+
+
+<img width="1998" height="1219" alt="image" src="https://github.com/user-attachments/assets/9ddd4812-42ad-473a-91da-e4c559c9c7ab" />
+<img width="1993" height="1255" alt="image" src="https://github.com/user-attachments/assets/c47489eb-853e-4c12-ab78-f5338cc37b76" />
+<img width="1985" height="1271" alt="image" src="https://github.com/user-attachments/assets/bd58dca9-8a85-4d00-9e7f-57af461311ca" />
+
 
 ---
 <img width="1860" height="1231" alt="image" src="https://github.com/user-attachments/assets/0b557893-1cff-4fd4-87ca-846db449e390" />
